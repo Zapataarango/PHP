@@ -1,42 +1,41 @@
 <?php
 	include '../controlador/configBd.php';
 	include '../controlador/ControlConexion.php';
-	include '../controlador/ControlRepresenVisual.php';
-	include '../modelo/RepresenVisual.php';
+	include '../controlador/ControlActor.php';
+	include '../modelo/Actor.php';
 	$boton = "";
 	$id = "";
 	$nom = "";
-	$objRepresenVisual = new ControlRepresenVisual(null);
-	$arregloRepresenVisual = $objRepresenVisual->listar();
+    $idTipoActor
+	$objActor = new ControlActor(null);
+	$arregloActor = $objActor->listar();
 	if (isset($_POST['bt'])) $boton = $_POST['bt'];//toma del arreglo post el value del bt	
 	if (isset($_POST['txtId'])) $id = $_POST['txtId'];
 	if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
 	switch ($boton) {
 		case 'Guardar':
-			$objRepresenVisual = new RepresenVisual($id, $nom);
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
-			$objControlRepresenVisual->guardar();
-			header('Location: VistaRepresenVisual.php');
+			$objActor = new Actor($id, $nom, $idTipoActor);
+			$objControlTipoActor = new ControlActor($objActor);
+			$objControlTipoActor->guardar();
+			header('Location: VistaActor.php');
 			break;
 		case 'Consultar':
-			$objRepresenVisual = new Rol($id, "");
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
-
-			$objRepresenVisual = $objControlRepresenVisual->consultar();
-			$con = $objRepresenVisual->getContrasena();
+			$objActor = new Actor($id, "");
+			$objControlTipoActor = new ControlActor($objActor);
+			$objActor = $objControlTipoActor->consultar();
+			$con = $objActor->getContrasena();
 			break;
 		case 'Modificar':
-			$objRepresenVisual = new Rol($id, $nom);
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
-
-			$objControlRepresenVisual->modificar();
-			header('Location: VistaRepresenVisual.php');
+			$objActor = new Actor($id, $nom);
+			$objControlTipoActor = new ControlActor($objActor);
+			$objControlTipoActor->modificar();
+			header('Location: VistaActor.php');
 			break;
 		case 'Borrar':
-			$objRepresenVisual = new Rol($id, "");
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
-			$objControlRepresenVisual->borrar();
-			header('Location: VistaRepresenVisual.php');
+			$objActor = new Actor($id, "");
+			$objControlTipoActor = new ControlActor($objActor);
+			$objControlTipoActor->borrar();
+			header('Location: VistaActor.php');
 			break;
 		
 		default:
@@ -67,7 +66,7 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2 class="miEstilo">Gestión <b>roles</b></h2>
+						<h2 class="miEstilo">Gestión <b>actores</b></h2>
 					</div>
 					<div class="col-sm-6">
 						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión roles</span></a>
@@ -86,12 +85,13 @@
 						</th>
 						<th>ID</th>
 						<th>Nombre</th>
+                        <th>Tipo actor</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-					for($i = 0; $i < count($e); $i++){
+					for($i = 0; $i < count($arregloActor); $i++){
 					?>
 						<tr>
 							<td>
@@ -100,8 +100,9 @@
 									<label for="checkbox1"></label>
 								</span>
 							</td>
-							<td><?php echo $arregloRepresenVisual[$i]->getId();?></td>
-							<td><?php echo $arregloRepresenVisual[$i]->getNombre();?></td>
+							<td><?php echo $arregloActor[$i]->getId();?></td>
+							<td><?php echo $arregloActor[$i]->getNombre();?></td>
+                            <td><?php echo $arregloActor[$i]->getTipoActor();?></td>
 							<td>
 								<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -113,7 +114,7 @@
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloRepresenVisual) ?></b> entries</div>
+				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloActor) ?></b> entries</div>
 				<ul class="pagination">
 					<li class="page-item disabled"><a href="#">Previous</a></li>
 					<li class="page-item"><a href="#" class="page-link">1</a></li>
