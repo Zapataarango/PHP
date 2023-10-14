@@ -49,3 +49,9 @@
             top: 20px;
             left: 160px;
         }
+
+        .menu-heading {
+            background-color: #555;
+            color: #fff;
+            padding: 15px;
+        }
