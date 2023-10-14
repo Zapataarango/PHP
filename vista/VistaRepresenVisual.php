@@ -14,27 +14,27 @@
 	switch ($boton) {
 		case 'Guardar':
 			$objRepresenVisual = new RepresenVisual($id, $nom);
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
+			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual);
 			$objControlRepresenVisual->guardar();
 			header('Location: VistaRepresenVisual.php');
 			break;
 		case 'Consultar':
-			$objRepresenVisual = new Rol($id, "");
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
+			$objRepresenVisual = new RepresenVisual($id, "");
+			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual);
 
 			$objRepresenVisual = $objControlRepresenVisual->consultar();
 			$con = $objRepresenVisual->getContrasena();
 			break;
 		case 'Modificar':
-			$objRepresenVisual = new Rol($id, $nom);
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
+			$objRepresenVisual = new RepresenVisual($id, $nom);
+			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual);
 
 			$objControlRepresenVisual->modificar();
 			header('Location: VistaRepresenVisual.php');
 			break;
 		case 'Borrar':
-			$objRepresenVisual = new Rol($id, "");
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual)
+			$objRepresenVisual = new RepresenVisual($id, "");
+			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual);
 			$objControlRepresenVisual->borrar();
 			header('Location: VistaRepresenVisual.php');
 			break;
@@ -91,7 +91,7 @@
 				</thead>
 				<tbody>
 					<?php
-					for($i = 0; $i < count($e); $i++){
+					for($i = 0; $i < count($arregloRepresenVisual); $i++){
 					?>
 						<tr>
 							<td>

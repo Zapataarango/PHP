@@ -8,7 +8,7 @@
     $fkidIndicador="";
     $fkfechaAsignacion="";
 	$objResponsableIndicador = new ControlResponsablesPorIndicador(null);
-	$arregloRespondableIndicador = $objResponsableIndicador->listar();
+	$arregloResponsableIndicador = $objResponsableIndicador->listar();
 	if (isset($_POST['bt'])) $boton = $_POST['bt'];//toma del arreglo post el value del bt	
 	if (isset($_POST['txtId'])) $id = $_POST['txtId'];
 	if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
@@ -20,7 +20,7 @@
 			header('Location: VistaActor.php');
 			break;
 		case 'Consultar':
-			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "");
+			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "", "");
 			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
 			$objResponsableIndicador = $objControlTipoActor->consultar();
 			$con = $objResponsableIndicador->getContrasena();
@@ -32,7 +32,7 @@
 			header('Location: VistaActor.php');
 			break;
 		case 'Borrar':
-			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "");
+			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "","");
 			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
 			$objControlTipoActor->borrar();
 			header('Location: VistaActor.php');
@@ -91,7 +91,7 @@
 				</thead>
 				<tbody>
 					<?php
-					for($i = 0; $i < count($arregloRespondableIndicador); $i++){
+					for($i = 0; $i < count($arregloResponsableIndicador); $i++){
 					?>
 						<tr>
 							<td>
@@ -100,9 +100,9 @@
 									<label for="checkbox1"></label>
 								</span>
 							</td>
-							<td><?php echo $arregloRespondableIndicador[$i]->getIdResponsable();?></td>
-							<td><?php echo $arregloRespondableIndicador[$i]->getIdIndicador();?></td>
-                            <td><?php echo $arregloRespondableIndicador[$i]->getFechaAsignacion();?></td>
+							<td><?php echo $arregloResponsableIndicador[$i]->getIdResponsable();?></td>
+							<td><?php echo $arregloResponsableIndicador[$i]->getIdIndicador();?></td>
+                            <td><?php echo $arregloResponsableIndicador[$i]->getFechaAsignacion();?></td>
 							<td>
 								<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -114,7 +114,7 @@
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloRespondableIndicador) ?></b> entries</div>
+				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloResponsableIndicador) ?></b> entries</div>
 				<ul class="pagination">
 					<li class="page-item disabled"><a href="#">Previous</a></li>
 					<li class="page-item"><a href="#" class="page-link">1</a></li>

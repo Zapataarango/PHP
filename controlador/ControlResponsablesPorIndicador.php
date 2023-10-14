@@ -17,7 +17,7 @@ class ControlResponsablesPorIndicador{
     }
     
     function consultar(){
-        $id= $this->objResponsableIndicador->getIdResponsable(); 
+        $fkidresponsable = $this->objResponsableIndicador->getIdResponsable(); 
         $comandoSql = "SELECT * FROM responsablesporindicador WHERE fkidresponsable = '$fkidresponsable'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
@@ -58,7 +58,7 @@ class ControlResponsablesPorIndicador{
             $arregloResponsableIndicador = array();
             $i = 0;
             while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
-                $objResponsableIndicador = new Actor("","","");
+                $objResponsableIndicador = new ResponsablesPorIndicador("","","");
                 $objResponsableIndicador->setIdResponsable($row['fkidresponsable']);
                 $objResponsableIndicador->setIdIndicador($row['fkidindicador']);
                 $objResponsableIndicador->setFechaAsignacion($row['fechaasignacion']);

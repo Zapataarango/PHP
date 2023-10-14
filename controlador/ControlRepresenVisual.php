@@ -59,7 +59,7 @@ class ControlRepresenVisual{
             $arregloRepresenVisuals = array();
             $i = 0;
             while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
-                $objRepresenVisual = new Rol("","");
+                $objRepresenVisual = new RepresenVisual("","");
                 $objRepresenVisual->setId($row['id']);
                 $objRepresenVisual->setNombre($row['nombre']);
                 $arregloRepresenVisuals[$i] = $objRepresenVisual;

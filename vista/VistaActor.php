@@ -20,19 +20,19 @@
 			header('Location: VistaActor.php');
 			break;
 		case 'Consultar':
-			$objActor = new Actor($id, "");
+			$objActor = new Actor($id, "", "");
 			$objControlTipoActor = new ControlActor($objActor);
 			$objActor = $objControlTipoActor->consultar();
 			$con = $objActor->getContrasena();
 			break;
 		case 'Modificar':
-			$objActor = new Actor($id, $nom);
+			$objActor = new Actor($id, $nom, $idTipoActor);
 			$objControlTipoActor = new ControlActor($objActor);
 			$objControlTipoActor->modificar();
 			header('Location: VistaActor.php');
 			break;
 		case 'Borrar':
-			$objActor = new Actor($id, "");
+			$objActor = new Actor($id, "", "");
 			$objControlTipoActor = new ControlActor($objActor);
 			$objControlTipoActor->borrar();
 			header('Location: VistaActor.php');

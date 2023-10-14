@@ -13,15 +13,36 @@
 </head>
 <body>
     <div class="sidebar" id="mySidebar">
-        <a href="VistaFuente.php">Vista de Fuentes</a>
-        <a href="VistaRepresenVisual.php">Vista de Represen visual</a>
-        <a href="VistaRoles.php">Vista de Roles</a>
-        <a href="VistaSeccion.php">Vista de Seccion</a>
-        <a href="VistaSentido.php">Vista de Sentido</a>
-        <a href="VistaSubseccion.php">Vista de Subseccion</a>
-        <a href="VistaTipoActor.php">Vista de tipo de actor</a>
-        <a href="VistaUnidadMedicion.php">Vista de unidad de medición</a>
-        <a href="VistaUsuarios.php">Vista de usuarios</a>
+        <div class="menu-heading" onclick="toggleSubMenu('menu1')">Modulo Usuarios</div>
+        <div id="menu1" class="submenu">
+            
+            <a href="VistaUsuarios.php">Vista de usuarios</a>
+            <a href="VistaRoles.php">Vista de Roles</a>
+
+        </div>
+
+        <div class="menu-heading" onclick="toggleSubMenu('menu2')">Modulo Indicadores</div>
+        <div id="menu2" class="submenu">
+            <a href="VistaRepresenVisual.php">Vista de Represen visual</a>
+            <a href="VistaFuente.php">Vista de Fuentes</a>
+            <a href="VistaSeccion.php">Vista de Seccion</a>
+            <a href="VistaSentido.php">Vista de Sentido</a>
+            <a href="VistaSubseccion.php">Vista de Subseccion</a>
+            <a href="VistaResultadoIndicador.php">Resultado Indicadores</a>
+            <a href="VistaTipoActor.php">Vista de tipo de actor</a>
+            <a href="VistaUnidadMedicion.php">Vista de unidad de medición</a>
+            <a href="VistaActor.php">Vista de actor</a>
+            <a href="VistaFuentesPorIndicador.php">Vista de unidad de medición</a>
+        </div>
+
+        <div class="menu-heading" onclick="toggleSubMenu('menu3')">Modulo Legal</div>
+        <div id="menu3" class="submenu">
+            
+            
+            
+        
+           
+        </div>
     </div>
 
     <div class="header">
@@ -29,7 +50,6 @@
             <button class="menu-button" onclick="openSidebar()">Menú</button>
             <h1>Bienvenido al módulo administrativo de gestión de indicadores</h1>
         </header>
-        
     </div>
 </body>
 </html>
