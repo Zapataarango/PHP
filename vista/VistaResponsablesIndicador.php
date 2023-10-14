@@ -1,39 +1,39 @@
 <?php
 	include '../controlador/configBd.php';
 	include '../controlador/ControlConexion.php';
-	include '../controlador/ControlActor.php';
-	include '../modelo/Actor.php';
+	include '../controlador/ControlResponsablesPorIndicador.php';
+	include '../modelo/ResponsablesPorIndicador.php';
 	$boton = "";
-	$id = "";
-	$nom = "";
-    $idTipoActor = "";
-	$objActor = new ControlActor(null);
-	$arregloActor = $objActor->listar();
+	$fkidResponsable="";
+    $fkidIndicador="";
+    $fkfechaAsignacion="";
+	$objResponsableIndicador = new ControlResponsablesPorIndicador(null);
+	$arregloRespondableIndicador = $objResponsableIndicador->listar();
 	if (isset($_POST['bt'])) $boton = $_POST['bt'];//toma del arreglo post el value del bt	
 	if (isset($_POST['txtId'])) $id = $_POST['txtId'];
 	if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
 	switch ($boton) {
 		case 'Guardar':
-			$objActor = new Actor($id, $nom, $idTipoActor);
-			$objControlTipoActor = new ControlActor($objActor);
+			$objResponsableIndicador = new ResponsablesPorIndicador($fkidResponsable, $fkidIndicador, $fkfechaAsignacion);
+			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
 			$objControlTipoActor->guardar();
 			header('Location: VistaActor.php');
 			break;
 		case 'Consultar':
-			$objActor = new Actor($id, "");
-			$objControlTipoActor = new ControlActor($objActor);
-			$objActor = $objControlTipoActor->consultar();
-			$con = $objActor->getContrasena();
+			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "");
+			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
+			$objResponsableIndicador = $objControlTipoActor->consultar();
+			$con = $objResponsableIndicador->getContrasena();
 			break;
 		case 'Modificar':
-			$objActor = new Actor($id, $nom);
-			$objControlTipoActor = new ControlActor($objActor);
+			$objResponsableIndicador = new ResponsablesPorIndicador($fkidResponsable, $fkidIndicador, $fkfechaAsignacion);
+			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
 			$objControlTipoActor->modificar();
 			header('Location: VistaActor.php');
 			break;
 		case 'Borrar':
-			$objActor = new Actor($id, "");
-			$objControlTipoActor = new ControlActor($objActor);
+			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "");
+			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
 			$objControlTipoActor->borrar();
 			header('Location: VistaActor.php');
 			break;
@@ -83,15 +83,15 @@
 								<label for="selectAll"></label>
 							</span>
 						</th>
-						<th>ID</th>
-						<th>Nombre</th>
-                        <th>Tipo actor</th>
+						<th>ID Responsable</th>
+						<th>ID indicador</th>
+                        <th>Fecha asignación</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-					for($i = 0; $i < count($arregloActor); $i++){
+					for($i = 0; $i < count($arregloRespondableIndicador); $i++){
 					?>
 						<tr>
 							<td>
@@ -100,9 +100,9 @@
 									<label for="checkbox1"></label>
 								</span>
 							</td>
-							<td><?php echo $arregloActor[$i]->getId();?></td>
-							<td><?php echo $arregloActor[$i]->getNombre();?></td>
-                            <td><?php echo $arregloActor[$i]->getTipoActor();?></td>
+							<td><?php echo $arregloRespondableIndicador[$i]->getIdResponsable();?></td>
+							<td><?php echo $arregloRespondableIndicador[$i]->getIdIndicador();?></td>
+                            <td><?php echo $arregloRespondableIndicador[$i]->getFechaAsignacion();?></td>
 							<td>
 								<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -114,7 +114,7 @@
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloActor) ?></b> entries</div>
+				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloRespondableIndicador) ?></b> entries</div>
 				<ul class="pagination">
 					<li class="page-item disabled"><a href="#">Previous</a></li>
 					<li class="page-item"><a href="#" class="page-link">1</a></li>
