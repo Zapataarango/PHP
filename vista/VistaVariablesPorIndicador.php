@@ -1,12 +1,12 @@
 <?php
     include '../controlador/configBd.php';
     include '../controlador/ControlConexion.php';
-    include '../controlador/Indicadores/ControlVariablesPorIndicador.php';
-    include '../modelo/Indicadores/VariablesPorIndicador.php';
+    include '../controlador/ControlVariablesPorIndicador.php';
+    include '../modelo/VariablesPorIndicador.php';
 
     $boton = "";
     $fkidVariable = "";
-    $fkIndicador = "";
+    $fkIdIndicador = "";
     $dato = "";
     $fkEmailUsuario = "";
     $fechaDato = "";
@@ -19,25 +19,13 @@
 
     switch ($boton) {
         case 'Guardar':
-            $objVariablesPorIndicador = new VariablesPorIndicador($id,$fkidVariable, $fkIndicador, $dato, $fkEmailUsuario, $fechaDato);
+            $objVariablesPorIndicador = new VariablesPorIndicador($id,$fkidVariable, $fkIdIndicador, $dato, $fkEmailUsuario, $fechaDato);
             $objControlVariablesPorIndicador = new ControlVariablesPorIndicador($objVariablesPorIndicador);
             $objControlVariablesPorIndicador->guardar();
             header('Location: VistaVariablesPorIndicador.php');
             break;
-        case 'Consultar':
-            $objVariablesPorIndicador = new VariablesPorIndicador($id,$fkidVariable, $fkIndicador, "", "", "");
-            $objControlVariablesPorIndicador = new ControlVariablesPorIndicador($objVariablesPorIndicador);
-            $objVariablesPorIndicador = $objControlVariablesPorIndicador->consultar();
-            $dato = $objVariablesPorIndicador->getDato();
-            break;
-        case 'Modificar':
-            $objVariablesPorIndicador = new VariablesPorIndicador($id,$fkidVariable, $fkIndicador, $dato, $fkEmailUsuario, $fechaDato);
-            $objControlVariablesPorIndicador = new ControlVariablesPorIndicador($objVariablesPorIndicador);
-            $objControlVariablesPorIndicador->modificar();
-            header('Location: VistaVariablesPorIndicador.php');
-            break;
         case 'Borrar':
-            $objVariablesPorIndicador = new VariablesPorIndicador($id,$fkidVariable, $fkIndicador, "", "", "");
+            $objVariablesPorIndicador = new VariablesPorIndicador($id,$fkidVariable, $fkIdIndicador, "", "", "");
             $objControlVariablesPorIndicador = new ControlVariablesPorIndicador($objVariablesPorIndicador);
             $objControlVariablesPorIndicador->borrar();
             header('Location: VistaVariablesPorIndicador.php');
@@ -153,7 +141,7 @@
                         </div>
                         <div class="form-group">
                             <label>ID Indicador</label>
-                            <input type="text" id="txtFkIndicador" name="txtFkIndicador" class="form-control" value="<?php echo $fkIndicador ?>">
+                            <input type="text" id="txtFkIndicador" name="txtFkIndicador" class="form-control" value="<?php echo $fkIdIndicador ?>">
                         </div>
                         <div class="form-group">
                             <label>Dato</label>

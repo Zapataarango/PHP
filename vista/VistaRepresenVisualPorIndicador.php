@@ -21,18 +21,6 @@ switch ($boton) {
         $objControlTipoActor->guardar();
         header('Location: VistaRepresenVisualPorIndicador.php');
         break;
-    case 'Consultar':
-        $objRepresenVisualIndicador = new RepresenVisualPorIndicador($fkidIndicador, "");
-        $objControlTipoActor = new ControlRepresenVisualPorIndicador($objRepresenVisualIndicador);
-        $objRepresenVisualIndicador = $objControlTipoActor->consultar();
-        $con = $objRepresenVisualIndicador->getFkIdRepresenVisual();
-        break;
-    case 'Modificar':
-        $objRepresenVisualIndicador = new RepresenVisualPorIndicador($fkidIndicador, $fkidRepresenVisual);
-        $objControlTipoActor = new ControlRepresenVisualPorIndicador($objRepresenVisualIndicador);
-        $objControlTipoActor->modificar();
-        header('Location: VistaRepresenVisualPorIndicador.php');
-        break;
     case 'Borrar':
         $objRepresenVisualIndicador = new RepresenVisualPorIndicador($fkidIndicador, "");
         $objControlTipoActor = new ControlRepresenVisualPorIndicador($objRepresenVisualIndicador);
@@ -148,8 +136,6 @@ switch ($boton) {
                     </div>
                     <div class="form-group">
                         <input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
-                        <input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
-                        <input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
                         <input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
                     </div>				
                 </div>

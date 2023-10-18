@@ -18,36 +18,6 @@ class ControlFuentesPorIndicador {
         $objControlConexion->cerrarBd();
     }
 
-    public function consultar() {
-        $fkidfuente = $this->objFuentesPorIndicador->getFkIdFuente();
-        $fkidindicador = $this->objFuentesPorIndicador->getFkIdIndicador();
-
-        $comandoSql = "SELECT * FROM fuentesporindicador WHERE fkidfuente = '$fkidfuente' AND fkidindicador = '$fkidindicador'";
-
-        $objControlConexion = new ControlConexion();
-        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
-        $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
-
-        if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-            $this->objFuentesPorIndicador->setFkIdFuente($row['fkidfuente']);
-            $this->objFuentesPorIndicador->setFkIdIndicador($row['fkidindicador']);
-        }
-
-        $objControlConexion->cerrarBd();
-        return $this->objFuentesPorIndicador;
-    }
-
-    public function modificar() {
-        $fkidfuente = $this->objFuentesPorIndicador->getFkIdFuente();
-        $fkidindicador = $this->objFuentesPorIndicador->getFkIdIndicador();
-
-        $comandoSql = "UPDATE fuentesporindicador SET fkidfuente = '$fkidfuente' WHERE fkidindicador = '$fkidindicador'";
-
-        $objControlConexion = new ControlConexion();
-        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
-        $objControlConexion->ejecutarComandoSql($comandoSql);
-        $objControlConexion->cerrarBd();
-    }
 
     public function borrar() {
         $fkidfuente = $this->objFuentesPorIndicador->getFkIdFuente();

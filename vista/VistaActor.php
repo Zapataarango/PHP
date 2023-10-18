@@ -2,33 +2,34 @@
 	include '../controlador/configBd.php';
 	include '../controlador/ControlConexion.php';
 	include '../controlador/ControlActor.php';
+	include '../controlador/ControlTipoActor.php';
 	include '../modelo/Actor.php';
+	include '../modelo/TipoActor.php';
 	$boton = "";
 	$id = "";
 	$nom = "";
-    $idTipoActor = "";
+	$nombre = "";
+    $fkIdTipoActor = "";
+	$combobox1 = "";
 	$objActor = new ControlActor(null);
 	$arregloActor = $objActor->listar();
+
+	$objControlTipoActor = new ControlTipoActor(null);
+	$arregloTipoActor = $objControlTipoActor->listar();
 	if (isset($_POST['bt'])) $boton = $_POST['bt'];//toma del arreglo post el value del bt	
 	if (isset($_POST['txtId'])) $id = $_POST['txtId'];
 	if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
+	if (isset($_POST['combobox1'])) $combobox1 = $_POST['combobox1'];
+	var_dump($combobox1);
 	switch ($boton) {
-		case 'Guardar':
-			$objActor = new Actor($id, $nom, $idTipoActor);
-			$objControlTipoActor = new ControlActor($objActor);
-			$objControlTipoActor->guardar();
-			header('Location: VistaActor.php');
-			break;
-		case 'Consultar':
-			$objActor = new Actor($id, "", "");
-			$objControlTipoActor = new ControlActor($objActor);
-			$objActor = $objControlTipoActor->consultar();
-			$con = $objActor->getContrasena();
-			break;
-		case 'Modificar':
-			$objActor = new Actor($id, $nom, $idTipoActor);
-			$objControlTipoActor = new ControlActor($objActor);
-			$objControlTipoActor->modificar();
+		case 'Guardar':		
+			if ($combobox1 != ""){		
+					list($fkIdTipoActor, $nombre) = explode(";", $combobox1);
+					$objActor = new Actor($id, $nom, $fkIdTipoActor);
+					$objControlActor = new ControlActor($objActor);
+					$objControlActor->guardar();
+				
+			}
 			header('Location: VistaActor.php');
 			break;
 		case 'Borrar':
@@ -48,7 +49,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Roles</title>
+<title>Actores</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -69,7 +70,7 @@
 						<h2 class="miEstilo">Gestión <b>actores</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión roles</span></a>
+						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión actores</span></a>
 						
 					</div>
 				</div>
@@ -132,27 +133,54 @@
 <div id="crudModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="vistaUsuarios.php" method="post">
+			<form action="vistaActor.php" method="post">
 				<div class="modal-header">						
-					<h4 class="modal-title">Rol</h4>
+					<h4 class="modal-title">Actor</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
-					<div class="form-group">
+				<div class="modal-body">
+				<div class="container">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#home">Datos de actor</a>
+							</li>
+							<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu1">Tipo de actor</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div id="home" class="container tab-pane active"><br>
+							<div class="form-group">
 						<label>ID</label>
-						<input type="email" id="txtId" name="txtId" class="form-control" value="<?php echo $id ?>">
-					</div>
-					<div class="form-group">
+						<input type="text" id="txtId" name="txtId" class="form-control" value="<?php echo $id ?>">
+							</div>
+							<div class="form-group">
 						<label>Nombre</label>
 						<input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
+							</div>
+							<div class="form-group">
+									<input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
+									<input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
+							</div>
+							</div>
+							<div id="menu1" class="container tab-pane fade"><br>
+							<div class="container">
+								<div class="form-group">
+									<label for="combobox1">Tipos de actor</label>
+								<select class="form-control" id="combobox1" name="combobox1">
+									<?php for($i=0; $i<count($arregloTipoActor); $i++){ ?>
+									<option value="<?php echo $arregloTipoActor[$i]->getId().";". $arregloTipoActor[$i]->getNombre(); ?>">
+										<?php echo $arregloTipoActor[$i]->getId().";". $arregloTipoActor[$i]->getNombre(); ?>
+									</option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>				
 					</div>
-					<div class="form-group">
-						<input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
-						<input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
-						<input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
-						<input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
-					</div>				
-				</div>
+					</div>
+					</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 					

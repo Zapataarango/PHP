@@ -21,7 +21,28 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#btnAgregarItem").click(function(event) {
+		return false;
+	 });
+
+	 $("#btnRemoverItem").click(function(event) {
+		return false;
+	 });
 });
+
+function agregarItem(idElementoOrigen, idElementoDestino){
+	var option=document.createElement("option");
+	option.text=document.getElementById(idElementoOrigen).value;
+	document.getElementById(idElementoDestino).add(option);
+}
+
+function removerItem(idElementoDestino){
+	var listBox = document.getElementById(idElementoDestino);
+	if (listBox.options.length > 0) {
+	  listBox.remove(listBox.options.length - 1);
+	}
+}
+
 
 function openSidebar() {
 	var sidebar = document.getElementById("mySidebar");

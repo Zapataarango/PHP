@@ -21,19 +21,6 @@ switch ($boton) {
         $objControlFuentesPorIndicador->guardar();
         header('Location: VistaFuentesPorIndicador.php');
         break;
-    case 'Consultar':
-        $objFuentesPorIndicador = new FuentesPorIndicador($fkidFuente, $fkidIndicador);
-        $objControlFuentesPorIndicador = new ControlFuentesPorIndicador($objFuentesPorIndicador);
-        $objFuentesPorIndicador = $objControlFuentesPorIndicador->consultar();
-        $fkidFuente = $objFuentesPorIndicador->getFkIdFuente();
-        $fkidIndicador = $objFuentesPorIndicador->getFkIdIndicador();
-        break;
-    case 'Modificar':
-        $objFuentesPorIndicador = new FuentesPorIndicador($fkidFuente, $fkidIndicador);
-        $objControlFuentesPorIndicador = new ControlFuentesPorIndicador($objFuentesPorIndicador);
-        $objControlFuentesPorIndicador->modificar();
-        header('Location: VistaFuentesPorIndicador.php');
-        break;
     case 'Borrar':
         $objFuentesPorIndicador = new FuentesPorIndicador($fkidFuente, $fkidIndicador);
         $objControlFuentesPorIndicador = new ControlFuentesPorIndicador($objFuentesPorIndicador);
@@ -110,4 +97,53 @@ switch ($boton) {
                         }
                         ?>
                     </tbody>
-                </
+                </table>
+			<div class="clearfix">
+				<div class="hint-text">Showing <?php echo$i?><b></b> out of <b><?php echo count($arregloActor) ?></b> entries</div>
+				<ul class="pagination">
+					<li class="page-item disabled"><a href="#">Previous</a></li>
+					<li class="page-item"><a href="#" class="page-link">1</a></li>
+					<li class="page-item"><a href="#" class="page-link">2</a></li>
+					<li class="page-item active"><a href="#" class="page-link">3</a></li>
+					<li class="page-item"><a href="#" class="page-link">4</a></li>
+					<li class="page-item"><a href="#" class="page-link">5</a></li>
+					<li class="page-item"><a href="#" class="page-link">Next</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>        
+</div>
+<!-- crud Modal HTML -->
+<div id="crudModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="vistaUsuarios.php" method="post">
+				<div class="modal-header">						
+					<h4 class="modal-title">Rol</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">					
+					<div class="form-group">
+						<label>ID</label>
+						<input type="email" id="txtId" name="txtId" class="form-control" value="<?php echo $id ?>">
+					</div>
+					<div class="form-group">
+						<label>Nombre</label>
+						<input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
+					</div>
+					<div class="form-group">
+						<input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
+						<input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
+					</div>				
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

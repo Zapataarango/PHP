@@ -8,35 +8,9 @@ class ControlActor{
     function guardar(){
         $id = $this->objActor->getId(); 
         $nom = $this->objActor->getNombre();
-        $tipo = $this->objActor->getTipoActor();
+        $fkIdTipoActor = $this->objActor->getTipoActor();
             
-        $comandoSql = "INSERT INTO actor(id,nombre) VALUES ('$id', '$nom')";
-        $objControlConexion = new ControlConexion();
-        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
-        $objControlConexion->ejecutarComandoSql($comandoSql);
-        $objControlConexion->cerrarBd();
-    }
-    
-    function consultar(){
-        $id= $this->objActor->getId(); 
-    
-        $comandoSql = "SELECT * FROM actor WHERE id = '$id'";
-        $objControlConexion = new ControlConexion();
-        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
-        $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
-        if ($row = $recordSet->fetch_array(MYSQLI_BOTH)){
-            $this->objActor->setContrasena($row['contrasena']);
-        }
-        $objControlConexion->cerrarBd();
-        return $this->objActor;
-    }
-
-    function modificar(){
-        $id = $this->objActor->getId(); 
-        $nom = $this->objActor->getNombre();
-        $tipo = $this->objActor->getTipoActor();
-        
-        $comandoSql = "UPDATE actor SET id='$id' WHERE nombre = '$nom'";
+        $comandoSql = "INSERT INTO actor(id,nombre, fkIdTipoActor) VALUES ('$id', '$nom', '$fkIdTipoActor')";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);

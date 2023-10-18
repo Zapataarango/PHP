@@ -19,18 +19,6 @@
 			$objControlTipoActor->guardar();
 			header('Location: VistaActor.php');
 			break;
-		case 'Consultar':
-			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "", "");
-			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
-			$objResponsableIndicador = $objControlTipoActor->consultar();
-			$con = $objResponsableIndicador->getContrasena();
-			break;
-		case 'Modificar':
-			$objResponsableIndicador = new ResponsablesPorIndicador($fkidResponsable, $fkidIndicador, $fkfechaAsignacion);
-			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
-			$objControlTipoActor->modificar();
-			header('Location: VistaActor.php');
-			break;
 		case 'Borrar':
 			$objResponsableIndicador = new ResponsablesPorIndicador($fkidresponsable, "","");
 			$objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
@@ -148,8 +136,6 @@
 					</div>
 					<div class="form-group">
 						<input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
-						<input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
-						<input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
 						<input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
 					</div>				
 				</div>

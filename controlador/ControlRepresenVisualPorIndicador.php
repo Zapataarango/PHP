@@ -16,28 +16,6 @@ class ControlRepresenVisualPorIndicador {
         $objControlConexion->cerrarBd();
     }
 
-    function consultar() {
-        $fkidindicador = $this->objRepresenVisualIndicador->getFkIdIndicador();
-        $comandoSql = "SELECT * FROM represenvisualporindicador WHERE fkidindicador = '$fkidindicador'";
-        $objControlConexion = new ControlConexion();
-        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
-        $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
-        if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-            $this->objRepresenVisualIndicador->setFkIdRepresenVisual($row['fkidrepresenvisual']);
-        }
-        $objControlConexion->cerrarBd();
-        return $this->objRepresenVisualIndicador;
-    }
-
-    function modificar() {
-        $fkidindicador = $this->objRepresenVisualIndicador->getFkIdIndicador();
-        $fkidrepresenvisual = $this->objRepresenVisualIndicador->getFkIdRepresenVisual();
-        $comandoSql = "UPDATE represenvisualporindicador SET fkidindicador='$fkidindicador' WHERE fkidrepresenvisual = '$fkidrepresenvisual'";
-        $objControlConexion = new ControlConexion();
-        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
-        $objControlConexion->ejecutarComandoSql($comandoSql);
-        $objControlConexion->cerrarBd();
-    }
 
     function borrar() {
         $fkidindicador = $this->objRepresenVisualIndicador->getFkIdIndicador();
