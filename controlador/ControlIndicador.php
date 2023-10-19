@@ -7,7 +7,6 @@ class ControlIndicador {
     }
 
     function guardar() {
-        $id = $this->objIndicador->getId();
         $codigo = $this->objIndicador->getCodigo();
         $nombre = $this->objIndicador->getNombre();
         $objetivo = $this->objIndicador->getObjetivo();
@@ -23,8 +22,8 @@ class ControlIndicador {
         $fkidnumeral = $this->objIndicador->getFkidnumeral();
         $fkidparagrafo = $this->objIndicador->getFkidparagrafo();
 
-        $comandoSql = "INSERT INTO indicador (id, codigo, nombre, objetivo, alcance, formula, fkidtipoindicador, fkidunidadmedicion, meta, fkidsentido, fkidfrecuencia, fkidarticulo, fkidliteral, fkidnumeral, fkidparagrafo)
-            VALUES ('$id', '$codigo', '$nombre', '$objetivo', '$alcance', '$formula', '$fkidtipoindicador', '$fkidunidadmedicion', '$meta', '$fkidsentido', '$fkidfrecuencia', '$fkidarticulo', '$fkidliteral', '$fkidnumeral', '$fkidparagrafo')";
+        $comandoSql = "INSERT INTO indicador (codigo, nombre, objetivo, alcance, formula, fkidtipoindicador, fkidunidadmedicion, meta, fkidsentido, fkidfrecuencia, fkidarticulo, fkidliteral, fkidnumeral, fkidparagrafo)
+            VALUES ('$codigo', '$nombre', '$objetivo', '$alcance', '$formula', '$fkidtipoindicador', '$fkidunidadmedicion', '$meta', '$fkidsentido', '$fkidfrecuencia', '$fkidarticulo', '$fkidliteral', '$fkidnumeral', '$fkidparagrafo')";
 
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);

@@ -3,17 +3,54 @@ include '../controlador/configBd.php';
 include '../controlador/ControlConexion.php';
 include '../controlador/ControlIndicador.php';
 include '../modelo/Indicador.php'; 
+
+include '../controlador/ControlRepresenVisual.php';
+include '../modelo/RepresenVisual.php'; 
+
+include '../controlador/ControlFuente.php';
+include '../modelo/Fuente.php';
+
+include '../controlador/ControlActor.php';
+include '../modelo/Actor.php';
+
+include '../controlador/ControlVariable.php';
+include '../modelo/Variable.php';
+
+
 $boton = "";
-$id = "";
+$id = ""; 
 $nom = "";
-$objIndicador = new ControlIndicador(null); // Cambiar a ControlIndicador
-$arregloIndicadores = $objIndicador->listar(); // Cambiar a ControlIndicador
+$codigo = "";
+$objetivo = "";
+$alcance = "";
+$formula = "";
+$meta = "";
+$objIndicador = new ControlIndicador(null);
+$arregloIndicadores = $objIndicador->listar();
+
+$objActor = new ControlActor(null);
+$arregloActor = $objActor->listar();
+
+$objRepresenVisual = new ControlRepresenVisual(null);
+$arregloRepresenVisual = $objRepresenVisual->listar();
+
+$objFuente = new ControlFuente(null);
+$arregloFuentes = $objFuente->listar();
+
+$objVariables = new ControlVariable(null);
+$arregloVariables = $objVariables->listar();
+
 if (isset($_POST['bt'])) $boton = $_POST['bt'];
 if (isset($_POST['txtId'])) $id = $_POST['txtId'];
+if (isset($_POST['txtCodigo'])) $codigo = $_POST['txtCodigo'];
 if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
+if (isset($_POST['txtObjetivo'])) $objetivo = $_POST['txtObjetivo'];
+if (isset($_POST['txtAlcance'])) $alcance = $_POST['txtAlcance'];
+if (isset($_POST['txtFormula'])) $formula = $_POST['txtFormula'];
+
 switch ($boton) {
     case 'Guardar':
-        $objIndicador = new Indicador($id, $codigo, $nombre, $objetivo, $alcance, $formula, $fkidtipoindicador, $fkidunidadmedicion, $meta, $fkidsentido, $fkidfrecuencia, $fkidarticulo, $fkidliteral, $fkidnumeral, $fkidparagrafo);
+        $objIndicador = new Indicador("",$codigo, $nombre, $objetivo, $alcance, $formula, $fkidtipoindicador, $fkidunidadmedicion, $meta, $fkidsentido, $fkidfrecuencia, $fkidarticulo, $fkidliteral, $fkidnumeral, $fkidparagrafo);
         $objControlIndicador = new ControlIndicador($objIndicador);
         $objControlIndicador->guardar();
         header('Location: VistaIndicador.php');
@@ -55,8 +92,10 @@ switch ($boton) {
         break;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -71,131 +110,267 @@ switch ($boton) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="../vista/js/misFunciones.js"></script>
 </head>
+
 <body>
-<div class="container-xl">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h2 class="miEstilo">Gestión <b>indicadores</b></h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión indicadores</span></a>
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2 class="miEstilo">Gestión <b>indicadores</b></h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xe8e5;</i> <span>Gestión indicadores</span></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <span class="custom-checkbox">
-                                <input type="checkbox" id="selectAll">
-                                <label for="selectAll"></label>
-                            </span>
-                        </th>
-                        <th>ID</th>
-                        <th>codigo</th>
-                        <th>Nombre</th>
-                        <th>objetivo</th>
-                        <th>alcance</th>
-                        <th>formula</th>
-                        <th>id tipo indicador</th>
-                        <th>id unidad medicion</th>
-                        <th>meta</th>
-                        <th>id sentido</th>
-                        <th>id frecuencia</th>
-                        <th>id articulo</th>
-                        <th>id literal</th>
-                        <th>id numeral</th>
-                        <th>id paragrafo</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    for($i = 0; $i < count($arregloIndicadores); $i++){
-                    ?>
+                <table class="table table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>
+                            <th>
                                 <span class="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                    <label for="checkbox1"></label>
+                                    <input type="checkbox" id="selectAll">
+                                    <label for="selectAll"></label>
                                 </span>
-                            </td>
-                            <td><?php echo $arregloIndicadores[$i]->getId();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getCodigo();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getNombre();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getObjetivo();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getAlcance();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFormula();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidtipoindicador();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidunidadmedicion();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getMeta();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidsentido();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidfrecuencia();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidarticulo();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidliteral();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidnumeral();?></td>
-                            <td><?php echo $arregloIndicadores[$i]->getFkidparagrafo();?></td>
-                            <td>
-                                <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                            </td>
+                            </th>
+                            <th>ID</th>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Objetivo</th>
+                            <th>Alcance</th>
+                            <th>Formula</th>
+                            <th>ID Tipo Indicador</th>
+                            <th>ID Unidad Medición</th>
+                            <th>Meta</th>
+                            <th>ID Sentido</th>
+                            <th>ID Frecuencia</th>
+                            <th>ID Artículo</th>
+                            <th>ID Literal</th>
+                            <th>ID Numeral</th>
+                            <th>ID Parágrafo</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php
-                    }
-
-                
-                    ?>
-                </tbody>
-            </table>
-            <div class="clearfix">
-                <div class="hint-text">Showing <?php echo $i ?><b></b> out of <b><?php echo count($arregloIndicadores) ?></b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
+                    </thead>
+                    <tbody>
+                        <?php
+                        for ($i = 0; $i < count($arregloIndicadores); $i++) {
+                        ?>
+                            <tr>
+                                <td>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <label for="checkbox1"></label>
+                                    </span>
+                                </td>
+                                <td><?php echo $arregloIndicadores[$i]->getId(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getCodigo(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getNombre(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getObjetivo(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getAlcance(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFormula(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidtipoindicador(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidunidadmedicion(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getMeta(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidsentido(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidfrecuencia(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidarticulo(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidliteral(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidnumeral(); ?></td>
+                                <td><?php echo $arregloIndicadores[$i]->getFkidparagrafo(); ?></td>
+                                <td>
+                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="hint-text">Showing <?php echo $i ?><b></b> out of <b><?php echo count($arregloIndicadores) ?></b> entries</div>
+                    <ul class="pagination">
+                        <li class="page-item disabled"><a href="#">Previous</a></li>
+                        <li class="page-item"><a href="#" class="page-link">1</a></li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                        <li class="page-item"><a href="#" class="page-link">4</a></li>
+                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- crud Modal HTML -->
-<div id="crudModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <!-- CRUD Modal HTML -->
+    <div id="crudModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
             <form action="VistaIndicador.php" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">Indicador</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="modal-header">
+                        <h4 class="modal-title">Indicadore</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#home">Datos de indicadores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menuRepresenVisualIndicador">Representación Visual por Indicador</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menuResponsablePorIndicador">Responsable por Indicador</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menuFuentesPorIndicador">Fuentes por Indicador</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menuVariablesPorIndicador">Variables por Indicador</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                    <div class="tab-content">
+                
+                        <div id="home" class="container tab-pane active"><br>
+                        <div class="form-group">
+                            <label>codigo</label>
+                            <input type="text" id="txtId" name="txtCodigo" class="form-control" value="<?php echo $codigo ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Objetivo</label>
+                            <input type="text" id="txtObjetivo" name="txtObjetivo" class="form-control" value="<?php echo $objetivo ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Alcance</label>
+                            <input type="text" id="txtAlcance" name="txtAlcance" class="form-control" value="<?php echo $alcance ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Formula</label>
+                            <input type="text" id="txtFormula" name="txtFormula" class="form-control" value="<?php echo $formula ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Meta</label>
+                            <input type="text" id="txtMeta" name="txtMeta" class="form-control" value="<?php echo $meta ?>">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
+                            <input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
+                            <input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
+                            <input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
+                        </div>
+                        </div>
+                        <div id="menuRepresenVisualIndicador" class="container tab-pane fade"><br>
+							<div class="container">
+								<div class="form-group">
+									<label for="combobox1">Representación visual por indicador</label>
+								<select class="form-control" id="combobox1" name="combobox1">
+									<?php for($i=0; $i<count($arregloRepresenVisual); $i++){ ?>
+									<option value="<?php echo $arregloRepresenVisual[$i]->getId().";". $arregloRepresenVisual[$i]->getNombre(); ?>">
+										<?php echo $arregloRepresenVisual[$i]->getId().";". $arregloRepresenVisual[$i]->getNombre(); ?>
+									</option>
+									<?php } ?>
+								</select>
+								<br>
+								<label for="listbox1">Representación visual elegida: </label>
+								<select multiple class="form-control" id="listbox1" name="listbox1[]">
+									
+								</select>
+								</div>
+									<div class="form-group">
+										<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+										<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox1')">Remover Item</button>
+									</div>
+								</div>
+							</div>
+                        <div id="menuResponsablePorIndicador" class="container tab-pane fade"><br>
+                            <div class="container">
+						    		<div class="form-group">
+                                        <label for="combobox2">Responsable por indicador</label>
+                                        <select class="form-control" id="combobox2" name="combobox2">
+						    			<?php for($i=0; $i<count($arregloActor); $i++){ ?>
+						    			<option value="<?php echo $arregloActor[$i]->getId().";". $arregloActor[$i]->getNombre(); ?>">
+						    				<?php echo $arregloActor[$i]->getId().";". $arregloActor[$i]->getNombre(); ?>
+						    			</option>
+						    			<?php } ?>
+						    		</select>
+						    		<br>
+						    		<label for="listbox2">Responsable elegido: </label>
+						    		<select multiple class="form-control" id="listbox2" name="listbox2[]">
+                                        
+						    		</select>
+						    		</div>
+						    			<div class="form-group">
+						    				<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox2', 'listbox2')">Agregar Item</button>
+						    				<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox2')">Remover Item</button>
+						    			</div>
+						    		</div>
+						</div>
+
+                        <div id="menuFuentesPorIndicador" class="container tab-pane fade"><br>
+                            <div class="container">
+						    		<div class="form-group">
+                                        <label for="combobox3">Fuentes por indicador</label>
+                                        <select class="form-control" id="combobox3" name="combobox3">
+						    			<?php for($i=0; $i<count($arregloFuentes); $i++){ ?>
+						    			<option value="<?php echo $arregloFuentes[$i]->getId().";". $arregloFuentes[$i]->getNombre(); ?>">
+						    				<?php echo $arregloFuentes[$i]->getId().";". $arregloFuentes[$i]->getNombre(); ?>
+						    			</option>
+						    			<?php } ?>
+						    		</select>
+						    		<br>
+						    		<label for="listbox3">Fuentes elegidas </label>
+						    		<select multiple class="form-control" id="listbox3" name="listbox3[]">
+                                        
+						    		</select>
+						    		</div>
+						    			<div class="form-group">
+						    				<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox3', 'listbox3')">Agregar Item</button>
+						    				<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox3')">Remover Item</button>
+						    			</div>
+						    		</div>
+						</div>
+
+                        <div id="menuVariablesPorIndicador" class="container tab-pane fade"><br>
+                            <div class="container">
+						    		<div class="form-group">
+                                        <label for="combobox4">Varables indicador</label>
+                                        <select class="form-control" id="combobox4" name="combobox4">
+						    			<?php for($i=0; $i<count($arregloVariables); $i++){ ?>
+						    			<option value="<?php echo $arregloVariables[$i]->getId().";". $arregloVariables[$i]->getNombre(); ?>">
+						    				<?php echo $arregloVariables[$i]->getId().";". $arregloVariables[$i]->getNombre(); ?>
+						    			</option>
+						    			<?php } ?>
+						    		</select>
+						    		<br>
+						    		<label for="listbox3">Variables elegidas</label>
+						    		<select multiple class="form-control" id="listbox4" name="listbox4[]">
+                                        
+						    		</select>
+						    		</div>
+						    			<div class="form-group">
+						    				<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox4', 'listbox4')">Agregar Item</button>
+						    				<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox4')">Remover Item</button>
+						    			</div>
+						    		</div>
+						</div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>ID</label>
-                        <input type="email" id="txtId" name="txtId" class="form-control" value="<?php echo $id ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
-                        <input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
-                        <input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
-                        <input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 </div>
             </form>
+            </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>

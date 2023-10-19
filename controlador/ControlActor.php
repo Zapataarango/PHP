@@ -8,9 +8,9 @@ class ControlActor{
     function guardar(){
         $id = $this->objActor->getId(); 
         $nom = $this->objActor->getNombre();
-        $fkIdTipoActor = $this->objActor->getTipoActor();
+        $fkidtipoactor = $this->objActor->getTipoActor();
             
-        $comandoSql = "INSERT INTO actor(id,nombre, fkIdTipoActor) VALUES ('$id', '$nom', '$fkIdTipoActor')";
+        $comandoSql = "insert into actor(id,nombre,fkidtipoactor) values ('$id', '$nom', '$fkidtipoactor')";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
