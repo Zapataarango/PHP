@@ -9,12 +9,12 @@ class ControlVariablesPorIndicador {
     public function guardar() {
         $id = $this->objVariablesPorIndicador->getId();
         $fkidvariable = $this->objVariablesPorIndicador->getFkIdVariable();
-        $fkindicador = $this->objVariablesPorIndicador->getFkIndicador();
+        $fkidindicador = $this->objVariablesPorIndicador->getFkIdIndicador();
         $dato = $this->objVariablesPorIndicador->getDato();
         $fkemailusuario = $this->objVariablesPorIndicador->getFkEmailUsuario();
         $fechadato = $this->objVariablesPorIndicador->getFechaDato();
 
-        $comandoSql = "INSERT INTO variablesporindicador(id, fkidvariable, fkindicador, dato, fkemailusuario, fechadato) VALUES ('$id', '$fkidvariable', '$fkindicador', '$dato', '$fkemailusuario', '$fechadato')";
+        $comandoSql = "INSERT INTO variablesporindicador(fkidvariable, fkidindicador, dato, fkemailusuario, fechadato) VALUES ('$fkidvariable', '$fkidindicador', '$dato', '$fkemailusuario', '$fechadato')";
 
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
@@ -48,7 +48,7 @@ class ControlVariablesPorIndicador {
                 $objVariablesPorIndicador = new VariablesPorIndicador("", "", "", "", "", "");
                 $objVariablesPorIndicador->setId($row['id']);
                 $objVariablesPorIndicador->setFkIdVariable($row['fkidvariable']);
-                $objVariablesPorIndicador->setFkIndicador($row['fkidindicador']);
+                $objVariablesPorIndicador->setFkIdIndicador($row['fkidindicador']);
                 $objVariablesPorIndicador->setDato($row['dato']);
                 $objVariablesPorIndicador->setFkEmailUsuario($row['fkemailusuario']);
                 $objVariablesPorIndicador->setFechaDato($row['fechadato']);

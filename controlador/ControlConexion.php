@@ -6,6 +6,7 @@ class ControlConexion{
 	
 	function __construct(){
 		$this->conn = null;
+		
 	}
 
     function abrirBd($servidor, $usuario, $password, $db, $port){
@@ -24,7 +25,7 @@ class ControlConexion{
 
     function cerrarBd() {
 		try{
-       $this->conn->close();
+       		$this->conn ->close();	
 		}
       	catch (Exception $e){
           	echo "ERROR AL CONECTARSE AL SERVIDOR ".$e->getMessage()."\n";
@@ -34,12 +35,17 @@ class ControlConexion{
     function ejecutarComandoSql($sql) {
 		//Este metodo lo utilizaremos para inset into, update, delete.
     	try	{
-			$this->conn->query($sql);
+			$this-> conn->query($sql);
 			}
 		catch (Exception $e) {
 				echo " NO SE AFECTARON LOS REGISTROS: ". $e->getMessage()."\n";
-		  }	
+				
+		  }
 		}
+
+	public function obtenerUltimoIdInsertado() {
+		return mysqli_insert_id($this->conn);
+	}
 
 	function ejecutarSelect($sql) {
 		//Select

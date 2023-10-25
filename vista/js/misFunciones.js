@@ -28,6 +28,10 @@ $(document).ready(function () {
 	 $("#btnRemoverItem").click(function(event) {
 		return false;
 	 });
+
+	 $("#menu-heading").click(function(event) {
+		return false;
+	 });
 });
 
 function agregarItem(idElementoOrigen, idElementoDestino){
@@ -45,15 +49,18 @@ function removerItem(idElementoDestino){
 
 
 function openSidebar() {
-	var sidebar = document.getElementById("mySidebar");
-	if (sidebar.style.left === "0px") {
-		sidebar.style.left = "-250px";
-	} else {
-		sidebar.style.left = "0px";
-	}
+    var sidebar = document.getElementById("mySidebar");
+    if (sidebar.style.left === "0px") {
+        sidebar.style.left = "-250px"; // Cierra el menú lateral
+    } else {
+        sidebar.style.left = "0px"; // Abre el menú lateral
+    }
 }
-
 function toggleSubMenu(menuId) {
-	var submenu = document.getElementById(menuId);
-	submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    var submenu = document.getElementById(menuId);
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none'; // Oculta el submenu
+    } else {
+        submenu.style.display = 'block'; // Muestra el submenu
+    }
 }

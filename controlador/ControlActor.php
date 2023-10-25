@@ -46,5 +46,10 @@ class ControlActor{
         $objControlConexion->cerrarBd();
         return $arregloActor;
     }
+
+
+   
+   
+    
 }
 ?>

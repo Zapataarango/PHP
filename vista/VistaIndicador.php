@@ -7,14 +7,30 @@ include '../modelo/Indicador.php';
 include '../controlador/ControlRepresenVisual.php';
 include '../modelo/RepresenVisual.php'; 
 
+include '../controlador/ControlRepresenVisualPorIndicador.php';
+include '../modelo/RepresenVisualPorIndicador.php';
+
 include '../controlador/ControlFuente.php';
 include '../modelo/Fuente.php';
+
+include '../controlador/ControlFuentesPorIndicador.php';
+include '../modelo/FuentesPorIndicador.php';
 
 include '../controlador/ControlActor.php';
 include '../modelo/Actor.php';
 
 include '../controlador/ControlVariable.php';
 include '../modelo/Variable.php';
+
+include '../controlador/ControlVariablesPorIndicador.php';
+include '../modelo/VariablesPorIndicador.php';
+
+include '../controlador/ControlTipoIndicador.php';
+include '../modelo/TipoIndicador.php';
+
+include '../controlador/ControlResponsablesPorIndicador.php';
+include '../modelo/ResponsablesPorIndicador.php';
+
 
 
 $boton = "";
@@ -25,6 +41,12 @@ $objetivo = "";
 $alcance = "";
 $formula = "";
 $meta = "";
+$meta = "";
+$fkidindicador = "";
+$listbox1 = array();
+$listbox2 = array();
+$listbox3 = array();
+$listbox4 = array();
 $objIndicador = new ControlIndicador(null);
 $arregloIndicadores = $objIndicador->listar();
 
@@ -40,6 +62,12 @@ $arregloFuentes = $objFuente->listar();
 $objVariables = new ControlVariable(null);
 $arregloVariables = $objVariables->listar();
 
+$objTipoIndicador = new ControlTipoIndicador(null);
+$arregloTipoIndicador = $objTipoIndicador->listar();
+
+$objResponsableIndicador = new ControlResponsablesPorIndicador(null);
+$arregloResponsableIndicador = $objResponsableIndicador->listar();
+
 if (isset($_POST['bt'])) $boton = $_POST['bt'];
 if (isset($_POST['txtId'])) $id = $_POST['txtId'];
 if (isset($_POST['txtCodigo'])) $codigo = $_POST['txtCodigo'];
@@ -47,12 +75,66 @@ if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
 if (isset($_POST['txtObjetivo'])) $objetivo = $_POST['txtObjetivo'];
 if (isset($_POST['txtAlcance'])) $alcance = $_POST['txtAlcance'];
 if (isset($_POST['txtFormula'])) $formula = $_POST['txtFormula'];
+if (isset($_POST['txtMeta'])) $meta = $_POST['txtMeta'];
+if (isset($_POST['listbox1'])) $listbox1 = $_POST['listbox1'];
+if (isset($_POST['listbox2'])) $listbox2 = $_POST['listbox2'];
+if (isset($_POST['listbox3'])) $listbox3 = $_POST['listbox3'];
+if (isset($_POST['listbox4'])) $listbox4 = $_POST['listbox4'];
 
 switch ($boton) {
     case 'Guardar':
-        $objIndicador = new Indicador("",$codigo, $nombre, $objetivo, $alcance, $formula, $fkidtipoindicador, $fkidunidadmedicion, $meta, $fkidsentido, $fkidfrecuencia, $fkidarticulo, $fkidliteral, $fkidnumeral, $fkidparagrafo);
+        if ($listbox1 !="") {
+        $objIndicador = new Indicador("",$codigo, $nom, $objetivo, $alcance, $formula, 1, 15, $meta,5, 5, "2.5.3.2.11.5", 0, 0, 0);
         $objControlIndicador = new ControlIndicador($objIndicador);
-        $objControlIndicador->guardar();
+        $fkidindicador = $objControlIndicador->guardar(); 
+			if ($listbox1 != ""){
+				for($i = 0; $i < count($listbox1); $i++){
+					$cadenas = explode(";", $listbox1[$i]);
+					$fkidrepresenvisual = $cadenas[0];
+            
+					$objRepresenVisualPorIndicador = new RepresenVisualPorIndicador($fkidrepresenvisual, $fkidindicador);
+					$objControlRepresenVisualPorIndicador= new ControlRepresenVisualPorIndicador($objRepresenVisualPorIndicador);
+					$objControlRepresenVisualPorIndicador->guardar();
+				}
+            }
+                
+                if ($listbox2 != ""){
+                    for($i = 0; $i < count($listbox2); $i++){
+                        $cadenas = explode(";", $listbox2[$i]);
+                        $idResponsable = $cadenas[0];
+                        date_default_timezone_set('America/Bogota');
+                        $timestamp = time();
+                        $fechaAsignacion = date("Y-m-d H:i:s", $timestamp);
+                        $objResponsableIndicador = new ResponsablesPorIndicador($idResponsable, $fkidindicador, $fechaAsignacion);
+		                $objControlTipoActor = new ControlResponsablesPorIndicador($objResponsableIndicador);
+		                $objControlTipoActor->guardar();
+                    }
+                }
+
+                    if ($listbox3 != ""){
+                        for($i = 0; $i < count($listbox3); $i++){
+                            $cadenas = explode(";", $listbox3[$i]);
+                            $fkidfuente = $cadenas[0];
+                            $objfuentesPorIndicador = new FuentesPorIndicador($fkidfuente, $fkidindicador);
+                            $objControlFuentesPorIndicador = new ControlFuentesPorIndicador($objfuentesPorIndicador);
+                            $objControlFuentesPorIndicador->guardar();
+                        }
+                    }
+
+                    if ($listbox4 != ""){
+                        for($i = 0; $i < count($listbox4); $i++){
+                            $cadenas = explode(";", $listbox4[$i]);
+                            $fkidvariable = $cadenas[0];
+                            date_default_timezone_set('America/Bogota');
+                             $timestamp = time();
+                             $fechaAsignacion = date("Y-m-d H:i:s", $timestamp);
+                            $id = $idResponsable;
+                             $objVariablesPorIndicador = new VariablesPorIndicador("",$fkidvariable, $fkidindicador,"40","admin@empresa.com",$fechaAsignacion);
+                             $objControlVariablesPorIndicador = new ControlVariablesPorIndicador($objVariablesPorIndicador);
+                             $objControlVariablesPorIndicador->guardar();
+                        }
+                    }
+        }
         header('Location: VistaIndicador.php');
         break;
     case 'Consultar':
@@ -82,7 +164,7 @@ switch ($boton) {
         header('Location: VistaIndicador.php');
         break;
     case 'Borrar':
-        $objIndicador = new Indicador($id, "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+        $objIndicador = new Indicador("","", $nom, "", "", "", "", "", "", "", "", "", "", "", "");
         $objControlIndicador = new ControlIndicador($objIndicador);
         $objControlIndicador->borrar();
         header('Location: VistaIndicador.php');
@@ -118,7 +200,7 @@ switch ($boton) {
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2 class="miEstilo">Gestión <b>indicadores</b></h2>
+                            <h2>Gestión <b>indicadores</b></h2>
                         </div>
                         <div class="col-sm-6">
                             <a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xe8e5;</i> <span>Gestión indicadores</span></a>
@@ -231,6 +313,9 @@ switch ($boton) {
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#menuVariablesPorIndicador">Variables por Indicador</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menuTipoIndicador">Tipo de Indicador</a>
+                                </li>
                             </ul>
                             <!-- Tab panes -->
                     <div class="tab-content">
@@ -341,7 +426,7 @@ switch ($boton) {
                         <div id="menuVariablesPorIndicador" class="container tab-pane fade"><br>
                             <div class="container">
 						    		<div class="form-group">
-                                        <label for="combobox4">Varables indicador</label>
+                                        <label for="combobox4">Variables indicador</label>
                                         <select class="form-control" id="combobox4" name="combobox4">
 						    			<?php for($i=0; $i<count($arregloVariables); $i++){ ?>
 						    			<option value="<?php echo $arregloVariables[$i]->getId().";". $arregloVariables[$i]->getNombre(); ?>">
@@ -358,6 +443,30 @@ switch ($boton) {
 						    			<div class="form-group">
 						    				<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox4', 'listbox4')">Agregar Item</button>
 						    				<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox4')">Remover Item</button>
+						    			</div>
+						    		</div>
+						</div>
+
+                        <div id="menuTipoIndicador" class="container tab-pane fade"><br>
+                            <div class="container">
+						    		<div class="form-group">
+                                        <label for="combobox5">Tipo indicador</label>
+                                        <select class="form-control" id="combobox4" name="combobox5">
+						    			<?php for($i=0; $i<count($arregloTipoIndicador); $i++){ ?>
+						    			<option value="<?php echo $arregloTipoIndicador[$i]->getId().";". $arregloTipoIndicador[$i]->getNombre(); ?>">
+						    				<?php echo $arregloTipoIndicador[$i]->getId().";". $arregloTipoIndicador[$i]->getNombre(); ?>
+						    			</option>
+						    			<?php } ?>
+						    		</select>
+						    		<br>
+						    		<label for="listbox3">Tipo elegido</label>
+						    		<select multiple class="form-control" id="listbox5" name="listbox4[]">
+                                        
+						    		</select>
+						    		</div>
+						    			<div class="form-group">
+						    				<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox5', 'listbox5')">Agregar Item</button>
+						    				<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox5')">Remover Item</button>
 						    			</div>
 						    		</div>
 						</div>

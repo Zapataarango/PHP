@@ -3,19 +3,23 @@
 	include '../controlador/ControlConexion.php';
 	include '../controlador/ControlRepresenVisual.php';
 	include '../modelo/RepresenVisual.php';
+
+	include '../controlador/ControlRepresenVisualPorIndicador.php';
+	include '../modelo/RepresenVisualPorIndicador.php';
 	$boton = "";
 	$id = "";
 	$nom = "";
+	$listbox1 = array();
 	$objRepresenVisual = new ControlRepresenVisual(null);
 	$arregloRepresenVisual = $objRepresenVisual->listar();
 	if (isset($_POST['bt'])) $boton = $_POST['bt'];//toma del arreglo post el value del bt	
 	if (isset($_POST['txtId'])) $id = $_POST['txtId'];
 	if (isset($_POST['txtNombre'])) $nom = $_POST['txtNombre'];
+	if (isset($_POST['listbox1'])) $listbox1 = $_POST['listbox1'];
 	switch ($boton) {
 		case 'Guardar':
-			$objRepresenVisual = new RepresenVisual($id, $nom);
-			$objControlRepresenVisual = new ControlRepresenVisual($objRepresenVisual);
-			$objControlRepresenVisual->guardar();
+			
+			
 			header('Location: VistaRepresenVisual.php');
 			break;
 		case 'Consultar':
@@ -131,26 +135,63 @@
 <div id="crudModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="vistaUsuarios.php" method="post">
+			<form action="VistaRepresenVisual.php" method="post">
 				<div class="modal-header">						
-					<h4 class="modal-title">Rol</h4>
+					<h4 class="modal-title">Representación visual</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
-					<div class="form-group">
-						<label>ID</label>
-						<input type="email" id="txtId" name="txtId" class="form-control" value="<?php echo $id ?>">
-					</div>
-					<div class="form-group">
-						<label>Nombre</label>
-						<input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
-					</div>
-					<div class="form-group">
-						<input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
-						<input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
-						<input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
-						<input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
-					</div>				
+				<div class="modal-body">
+					
+						<div class="container">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#home">Represntación visual</a>
+							</li>
+							<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu1">Indicador</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div id="home" class="container tab-pane active"><br>
+								<div class="form-group">
+									<label>Nombre</label>
+									<input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
+								</div>
+								<div class="form-group">
+									<input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
+									<input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
+									<input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
+									<input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
+								</div>
+							</div>
+							<div id="menu1" class="container tab-pane fade"><br>
+							<div class="container">
+								<div class="form-group">
+									<label for="combobox1"></label>
+								<select class="form-control" id="combobox1" name="combobox1">
+									<?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+									<option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+										<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+									</option>
+									<?php } ?>
+								</select>
+								<br>
+								<label for="listbox1">Roles específicos del usuario</label>
+								<select multiple class="form-control" id="listbox1" name="listbox1[]">
+									
+								</select>
+								</div>
+									<div class="form-group">
+										<button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+										<button type="button" id="btnRemoverItem" name="bt" class="btn btn-success" onclick="removerItem('listbox1')">Remover Item</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>				
+									
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -160,6 +201,5 @@
 		</div>
 	</div>
 </div>
-
 </body>
 </html>

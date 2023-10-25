@@ -2,12 +2,12 @@
 class Actor {
     private $id;
     private $nombre;
-    private $fkIdTipoActor; // Esta propiedad almacenará un objeto de la clase TipoActor
+    private $fkidtipoactor; // Esta propiedad almacenará un objeto de la clase TipoActor
 
-    public function __construct($id, $nombre, $fkIdTipoActor) {
+    public function __construct($id, $nombre, $fkidtipoactor) {
         $this->id = $id;
         $this->nombre = $nombre;
-        $this->fkIdTipoActor = $fkIdTipoActor;
+        $this->fkidtipoactor = $fkidtipoactor;
     }
 
     public function setId($id) {
@@ -26,12 +26,12 @@ class Actor {
         return $this->nombre;
     }
 
-    public function setTipoActor($fkIdTipoActor) {
-        $this->fkIdTipoActor = $fkIdTipoActor;
+    public function setTipoActor($fkidtipoactor) {
+        $this->fkidtipoactor = $fkidtipoactor;
     }
 
     public function getTipoActor() {
-        return $this->fkIdTipoActor;
+        return $this->fkidtipoactor;
     }
 }
 ?>

@@ -28,7 +28,9 @@ class ControlIndicador {
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
+        $insertId = $objControlConexion->obtenerUltimoIdInsertado();
         $objControlConexion->cerrarBd();
+        return $insertId;
     }
 
     function consultar() {
@@ -74,8 +76,8 @@ class ControlIndicador {
     }
 
     function borrar() {
-        $id = $this->objIndicador->getId();
-        $comandoSql = "DELETE FROM indicador WHERE id = '$id'";
+        $nom = $this->objIndicador->getNombre();
+        $comandoSql = "DELETE FROM indicador WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);

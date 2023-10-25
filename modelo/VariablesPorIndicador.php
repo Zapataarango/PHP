@@ -2,15 +2,15 @@
 class VariablesPorIndicador {
     private $id;
     private $fkidvariable;
-    private $fkindicador;
+    private $fkidindicador;
     private $dato;
     private $fkemailusuario;
     private $fechadato;
 
-    public function __construct($id, $fkidvariable, $fkindicador, $dato, $fkemailusuario, $fechadato) {
+    public function __construct($id, $fkidvariable, $fkidindicador, $dato, $fkemailusuario, $fechadato) {
         $this->id = $id;
         $this->fkidvariable = $fkidvariable;
-        $this->fkindicador = $fkindicador;
+        $this->fkidindicador = $fkidindicador;
         $this->dato = $dato;
         $this->fkemailusuario = $fkemailusuario;
         $this->fechadato = $fechadato;
@@ -24,8 +24,8 @@ class VariablesPorIndicador {
         return $this->fkidvariable;
     }
 
-    public function getFkIndicador() {
-        return $this->fkindicador;
+    public function getFkIdIndicador() {
+        return $this->fkidindicador;
     }
 
     public function getDato() {
@@ -48,8 +48,8 @@ class VariablesPorIndicador {
         $this->fkidvariable = $fkidvariable;
     }
 
-    public function setFkIndicador($fkindicador) {
-        $this->fkindicador = $fkindicador;
+    public function setFkIdIndicador($fkidindicador) {
+        $this->fkidindicador = $fkidindicador;
     }
 
     public function setDato($dato) {

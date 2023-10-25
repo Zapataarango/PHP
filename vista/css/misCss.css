@@ -1,27 +1,137 @@
 body {
-	color: #566787;
-	background: #f5f5f5;
-	font-family: 'Varela Round', sans-serif;
-	font-size: 13px;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.table-responsive {
-    margin: 30px 0;
+/* Estilos para el contenido principal */
+.content {
+    margin-left: 250px; /* Ancho de la barra lateral */
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.miEstilo{
-	color:#ffffff;
+/* Estilos para el encabezado (header) */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #435d7d; /* Fondo azul */
+    color: #fff;
+    text-align: end;
+    padding: 10px;
+    z-index: 1000; /* Asegura que esté en la parte superior de la pila */
 }
+
+.sub-header {
+    position: fixed;
+    top: 20%;
+    left: 61%;
+    color: #000000;
+    text-align: end;
+    padding: 10px;
+    z-index: 1000; /* Asegura que esté en la parte superior de la pila */
+}
+
+/* Estilos para el botón de menú */
+.menu-button {
+    background-color: #435d7d; /* Fondo azul */
+    color: #fff;
+    position: absolute;
+    top: 20px;
+    left: 160px;
+}
+
+/* Estilos para el encabezado del menú */
+.menu-heading {
+    background-color: #435d7d56; /* Fondo azul */
+    color: #fff;
+    padding: 15px;
+    position: relative; /* Necesario para posicionar el subrayado */
+}
+
+.submenu {
+    display: none; /* Inicialmente oculto */
+    padding-left: 20px;
+}
+
+.menu-heading {
+    cursor: pointer;
+}
+
+.menu-heading:hover{
+	background-color: #0000004d;
+}
+
+.menu-heading::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Grosor del subrayado */
+    background-color: #20295a; /* Color del subrayado */
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 5%;
+    left: -250px;
+    background-color: #435d7d; /* Fondo azul */
+    padding-top: 20px;
+    transition: left 0.3s;
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical */
+}
+
+.sidebar-content {
+    max-height: 100%; /* Altura máxima del contenido de la barra lateral */
+    padding-bottom: 20px; /* Espacio para la barra de desplazamiento */
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #0000004d; /* Fondo azul más oscuro al pasar el ratón */
+}
+
+.open-sidebar {
+    left: 0;
+}
+
+.table-responsive {
+    margin: 0 auto; /* Esto centra el contenedor horizontalmente */
+    display: flex;
+    justify-content: center; /* Esto centra el contenido horizontalmente */
+    align-items: center; /* Esto centra el contenido verticalmente */
+	vertical-align: middle;
+}
+
 
 .table-wrapper {
 	background: #fff;
 	padding: 20px 25px;
 	border-radius: 3px;
 	min-width: 1000px;
+	vertical-align: bottom;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-title {        
 	padding-bottom: 15px;
-	background: #6c6f72;
+	background: #435d7d;
 	color: #fff;
 	padding: 16px 30px;
 	min-width: 100%;
@@ -56,7 +166,7 @@ body {
 	margin-top: 2px;
 }
 table.table tr th, table.table tr td {
-	border-color: #e9e9e9;
+	border-color: #e9e9e936;
 	padding: 12px 15px;
 	vertical-align: middle;
 }
@@ -67,10 +177,10 @@ table.table tr th:last-child {
 	width: 100px;
 }
 table.table-striped tbody tr:nth-of-type(odd) {
-	background-color: #fcfcfc;
+	background-color: #fcfcfc31;
 }
 table.table-striped.table-hover tbody tr:hover {
-	background: #f5f5f5;
+	background: #f5f5f542;
 }
 table.table th i {
 	font-size: 13px;
@@ -227,3 +337,5 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }
+
+

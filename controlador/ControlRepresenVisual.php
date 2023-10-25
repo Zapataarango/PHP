@@ -6,10 +6,9 @@ class ControlRepresenVisual{
         $this->objRepresenVisual = $objRepresenVisual;
     }
     function guardar(){
-        $id = $this->objRepresenVisual->getId(); 
         $nom = $this->objRepresenVisual->getNombre();
             
-        $comandoSql = "INSERT INTO Represenvisual(id,nombre) VALUES ('$id', '$nom')";
+        $comandoSql = "INSERT INTO Represenvisual(nombre) VALUES ('$nom')";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
@@ -17,9 +16,9 @@ class ControlRepresenVisual{
     }
     
     function consultar(){
-        $id= $this->objRepresenVisual->getId(); 
+        $nom= $this->objRepresenVisual->getNombre(); 
     
-        $comandoSql = "SELECT * FROM Represenvisual WHERE id = '$id'";
+        $comandoSql = "SELECT * FROM Represenvisual WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
@@ -34,7 +33,7 @@ class ControlRepresenVisual{
         $id = $this->objRepresenVisual->getId(); 
         $nom = $this->objRepresenVisual->getNombre();
         
-        $comandoSql = "UPDATE Represenvisual SET id='$id' WHERE nombre = '$nom'";
+        $comandoSql = "UPDATE Represenvisual SET nombre='$nom' WHERE id = '$id'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
@@ -42,8 +41,8 @@ class ControlRepresenVisual{
     }
 
     function borrar(){
-        $id= $this->objRepresenVisual->getId(); 
-        $comandoSql = "DELETE FROM Represenvisual WHERE id = '$id'";
+        $nom= $this->objRepresenVisual->getNombre(); 
+        $comandoSql = "DELETE FROM Represenvisual WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'],$GLOBALS['usua'],$GLOBALS['pass'],$GLOBALS['bdat'],$GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);

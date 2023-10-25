@@ -45,5 +45,25 @@ class ControlRepresenVisualPorIndicador {
         $objControlConexion->cerrarBd();
         return $arregloRepresenVisualIndicador;
     }
+
+    function listarNombres() {
+        $comandoSql = "SELECT indicador.nombre AS nombre_indicador, represenvisual.nombre AS nombre_represenvisual
+        FROM represenvisualporindicador
+        JOIN indicador ON represenvisualporindicador.fkidindicador = indicador.id
+        JOIN represenvisual ON represenvisualporindicador.fkidrepresenvisual = represenvisual.id;";
+        
+        $objControlConexion = new ControlConexion();
+        $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
+        $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
+        
+        $arregloRepresenVisualIndicadorNombres = array();
+    
+        while ($row = mysqli_fetch_assoc($recordSet)) {
+            $arregloRepresenVisualIndicadorNombres[] = $row;
+        }
+        
+        $objControlConexion->cerrarBd();
+        return $arregloRepresenVisualIndicadorNombres;
+    }
 }
 ?>

@@ -65,10 +65,10 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2 class="miEstilo">Gestión <b>roles</b></h2>
+						<h2 class="miEstilo">Gestión <b>tipo indicador</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión roles</span></a>
+						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión tipo indicador</span></a>
 						
 					</div>
 				</div>

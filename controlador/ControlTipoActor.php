@@ -6,10 +6,9 @@ class ControlTipoActor{
         $this->objTipoActor = $objTipoActor;
     }
     function guardar(){
-        $id = $this->objTipoActor->getId(); 
         $nom = $this->objTipoActor->getNombre();
             
-        $comandoSql = "INSERT INTO tipoactor(id,nombre) VALUES ('$id', '$nom')";
+        $comandoSql = "INSERT INTO tipoactor(nombre) VALUES ('$nom')";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
@@ -17,9 +16,9 @@ class ControlTipoActor{
     }
     
     function consultar(){
-        $id= $this->objTipoActor->getId(); 
+        $nom= $this->objTipoActor->getNombre(); 
     
-        $comandoSql = "SELECT * FROM tipoactor WHERE id = '$id'";
+        $comandoSql = "SELECT * FROM tipoactor WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
@@ -31,10 +30,9 @@ class ControlTipoActor{
     }
 
     function modificar(){
-        $id = $this->objTipoActor->getId(); 
         $nom = $this->objTipoActor->getNombre();
         
-        $comandoSql = "UPDATE tipoactor SET id='$id' WHERE nombre = '$nom'";
+        $comandoSql = "UPDATE tipoactor SET id='$nom' WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
@@ -42,8 +40,8 @@ class ControlTipoActor{
     }
 
     function borrar(){
-        $id= $this->objTipoActor->getId(); 
-        $comandoSql = "DELETE FROM tipoactor WHERE id = '$id'";
+        $nom= $this->objTipoActor->getNombre(); 
+        $comandoSql = "DELETE FROM tipoactor WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'],$GLOBALS['usua'],$GLOBALS['pass'],$GLOBALS['bdat'],$GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);

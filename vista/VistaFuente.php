@@ -31,7 +31,7 @@
 			header('Location: VistaFuente.php');
 			break;
 		case 'Borrar':
-			$objFuente = new Fuente($id, "");
+			$objFuente = new Fuente("", $nom);
 			$objControlFuente = new ControlFuente($objFuente);
 			$objControlFuente->borrar();
 			header('Location: VistaFuente.php');
@@ -47,7 +47,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Roles</title>
+<title>Fuentes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -65,10 +65,10 @@
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2 class="miEstilo">Gestión <b>roles</b></h2>
+						<h2 class="miEstilo">Gestión <b>Fuentes</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión roles</span></a>
+						<a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#Xf02e;</i> <span>Gestión Fuentes</span></a>
 						
 					</div>
 				</div>
@@ -129,17 +129,12 @@
 <div id="crudModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="vistaUsuarios.php" method="post">
+			<form action="vistaFuente.php" method="post">
 				<div class="modal-header">						
 					<h4 class="modal-title">Rol</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
-					<div class="form-group">
-						<label>ID</label>
-						<input type="email" id="txtId" name="txtId" class="form-control" value="<?php echo $id ?>">
-					</div>
-					<div class="form-group">
+				<div class="modal-body">
 						<label>Nombre</label>
 						<input type="text" id="txtNombre" name="txtNombre" class="form-control" value="<?php echo $nom ?>">
 					</div>

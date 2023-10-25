@@ -6,10 +6,9 @@ class ControlFuente{
         $this->objFuente = $objFuente;
     }
     function guardar(){
-        $id = $this->objFuente->getId(); 
         $nom = $this->objFuente->getNombre();
             
-        $comandoSql = "INSERT INTO Fuente(id,nombre) VALUES ('$id', '$nom')";
+        $comandoSql = "INSERT INTO Fuente(nombre) VALUES ('$nom')";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
@@ -17,9 +16,9 @@ class ControlFuente{
     }
     
     function consultar(){
-        $id= $this->objFuente->getId(); 
+        $nom= $this->objFuente->getNombre(); 
     
-        $comandoSql = "SELECT * FROM Fuente WHERE id = '$id'";
+        $comandoSql = "SELECT * FROM Fuente WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
@@ -27,14 +26,13 @@ class ControlFuente{
             $this->objFuente->setContrasena($row['contrasena']);
         }
         $objControlConexion->cerrarBd();
-        return $this->objRol;
+        return $this->objFuente;
     }
 
     function modificar(){
-        $id = $this->objFuente->getId(); 
         $nom = $this->objFuente->getNombre();
         
-        $comandoSql = "UPDATE Fuente SET id='$id' WHERE nombre = '$nom'";
+        $comandoSql = "UPDATE Fuente SET nombre='$nom' WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'], $GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
@@ -42,8 +40,8 @@ class ControlFuente{
     }
 
     function borrar(){
-        $id= $this->objFuente->getId(); 
-        $comandoSql = "DELETE FROM Fuente WHERE id = '$id'";
+        $nom= $this->objFuente->getNombre(); 
+        $comandoSql = "DELETE FROM Fuente WHERE nombre = '$nom'";
         $objControlConexion = new ControlConexion();
         $objControlConexion->abrirBd($GLOBALS['serv'],$GLOBALS['usua'],$GLOBALS['pass'],$GLOBALS['bdat'],$GLOBALS['port']);
         $objControlConexion->ejecutarComandoSql($comandoSql);
